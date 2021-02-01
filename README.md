@@ -2,19 +2,36 @@
 
 Sourced from https://github.com/SumindaD/Fargate-ECSCluster-Cloudformation, credits to SumindaD
 
+**** Prologue ****
+
 Instead of manually creating an AWS CodePipeline, an ECS Fargate Cluster infrastructure and configuring a CI/CD Pipeline with Github, Let’s configure a Cloudformation template to automate all of that for us.
 Following AWS services will be deployed.
 
 Cloudformation
-CodeBuild
-CodeDeploy
-CodePipeline
+ECR Repository
+S3 Bucket
+IAM Role for CodePipeline Execution
+IAM Role for CodeBuild Execution
+IAM Role for Cloudformation Execution
+AWS CodePipeline
+AWS CodeBuild project
+AWS CodeDeploy
+ECS Cluster
 VPC with 2 Subnets
-ECR
-Application Load Balancer
+RouteTable
+Route
+2 Subnet Route Table Associations
 Internet Gateway
+VPC Gateway Attachment
+IAM Role for ECS Task Execution
+ECS TaskDefinition
+2 SecurityGroups
+Application Load Balancer
+TargetGroup
+Listener
 Fargate ECS Cluster
 A sample Docker container running NodeJS hello world app.
+
 
 It’s not possible to create all of these AWS Resources using a single Cloudformation template simply because in order to create an ECS Cluster, the Docker image needs to be in the ECR.
 Running all of these creations in a single Cloudformation template would result in a failure during the ECS cluster creation simply because there would be no Docker image available in the ECR as the ECR itself is also being created by the same Cloudformation template.
@@ -120,6 +137,8 @@ TargetGroup
 Listener
 ECS Service
 
+
+Things to notice:
 
 a) In the ECS service part of the template note that
 
